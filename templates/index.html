@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Database Titanic</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Database Titanic</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Titanic</h1>
+        <form method="POST" action="/train">
+            <div class="form-group">
+                <label for="classifier">Escolha seu classificador:</label>
+                <select name="classifier" id="classifier" class="form-control">
+                    {% for classifier in classifiers %}
+                        <option value="{{ classifier }}">{{ classifier }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            {% if 'KNeighborsClassifier' in classifiers %}
+                <div class="form-group">
+                    <label for="neighbors">Quantidade de vizinhos (KNeighborsClassifier):</label>
+                    <input type="number" name="neighbors" value="5" class="form-control">
+                </div>
+            {% endif %}
+            {% if 'MLPClassifier' in classifiers %}
+                <div class="form-group">
+                    <label for="max_iter">Iterações máximas (MLPClassifier):</label>
+                    <input type="number" name="max_iter" value="100" class="form-control">
+                </div>
+            {% endif %}
+            {% if 'DecisionTreeClassifier' in classifiers %}
+                <div class="form-group">
+                    <label for="max_depth">Máxima (DecisionTreeClassifier):</label>
+                    <input type="number" name="max_depth" value="5" class="form-control">
+                </div>
+            {% endif %}
+            {% if 'RandomForestClassifier' in classifiers %}
+                <div class="form-group">
+                    <label for="n_estimators">Estimadores (RandomForestClassifier):</label>
+                    <input type="number" name="n_estimators" value="100" class="form-control">
+                </div>
+            {% endif %}
+            <button type="submit" class="btn btn-outline-info btn-lg btn-block">Avaliar!</button>
+        </form>
+
+        {% if classifier %}
+            <div class="result">
+                <h2>Result</h2>
+                <p><strong>Classificador:</strong> {{ classifier }}</p>
+                <p><strong>Acurácia:</strong> {{ accuracy }}</p>
+                <p><strong>Média F1-Score:</strong> {{ macro_f1_score }}</p>
+                {% if confusion_matrix %}
+                    <h3 class="mt-3">Matriz de Confusão</h3>
+                    <img src="data:image/png;base64, {{ confusion_matrix }}" alt="Matriz de confusão" class="img-fluid">
+                {% endif %}
+                <a href="/" class="btn btn-warning">Back to Home</a>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

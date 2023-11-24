@@ -1,0 +1,27 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.result {
+    margin-top: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.btn-primary {
+    background-color: #f0ad4e;
+    border-color: #f0ad4e;
+}
+
+.btn-primary:hover {
+    background-color: #f0ad4e;
+    border-color: #f0ad4e;
+}
+
